@@ -28,5 +28,8 @@ let data = `${contents}\n\nexport default {\n${Object.entries(map)
 fs.writeFileSync(location, data, 'utf8')
 
 export default {
+  server: {
+    port: 9000,
+  },
   plugins: [vue()],
 }
