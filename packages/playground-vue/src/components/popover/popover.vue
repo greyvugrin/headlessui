@@ -25,6 +25,7 @@
             :key="i"
             :hidden="i === 2"
             class="border-2 border-transparent px-3 py-2 text-left hover:bg-gray-200 focus:border-blue-900 focus:bg-gray-200 focus:outline-none"
+            data-test="normal-link"
           >
             Normal - {{ link }}
           </button>

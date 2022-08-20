@@ -137,12 +137,15 @@ export let Popover = defineComponent({
       beforePanelSentinel,
       afterPanelSentinel,
       togglePopover() {
+        console.log('togglePopover', popoverState.value)
         popoverState.value = match(popoverState.value, {
           [PopoverStates.Open]: PopoverStates.Closed,
           [PopoverStates.Closed]: PopoverStates.Open,
         })
       },
       closePopover() {
+        console.log('closePopover', popoverState.value)
+
         if (popoverState.value === PopoverStates.Closed) return
         popoverState.value = PopoverStates.Closed
       },
@@ -183,6 +186,15 @@ export let Popover = defineComponent({
     let registerPopover = groupContext?.registerPopover
 
     function isFocusWithinPopoverGroup() {
+      console.log(ownerDocument.value?.activeElement)
+      console
+      console.log(
+        'first part', groupContext?.isFocusWithinPopoverGroup(),
+        'second part', (ownerDocument.value?.activeElement &&
+          (dom(button)?.contains(ownerDocument.value.activeElement) ||
+            dom(panel)?.contains(ownerDocument.value.activeElement)))
+      )
+
       return (
         groupContext?.isFocusWithinPopoverGroup() ??
         (ownerDocument.value?.activeElement &&
@@ -204,6 +216,8 @@ export let Popover = defineComponent({
         if (!panel) return
         if (dom(api.beforePanelSentinel)?.contains(event.target as HTMLElement)) return
         if (dom(api.afterPanelSentinel)?.contains(event.target as HTMLElement)) return
+
+        console.log('focus out - closing')
 
         api.closePopover()
       },
@@ -323,6 +337,8 @@ export let PopoverButton = defineComponent({
     }
 
     function handleClick(event: MouseEvent) {
+      console.log('clicked')
+
       if (props.disabled) return
       if (isWithinPanel) {
         api.closePopover()
